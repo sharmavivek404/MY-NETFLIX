@@ -1,6 +1,6 @@
  import Header from "./Header";
  import { useState,useRef } from "react";
- import { checkValidData } from "./Validate";
+ import { checkValidData } from "../utils/Validate";
  const Login = ()=>{
   const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null); 
@@ -10,6 +10,9 @@
   const handleButtonClick = () => {
     const message = checkValidData(name.current.value,email.current.value, password.current.value);
     setErrorMessage(message);
+    if(message) return;
+    //sign in/ sign up 
+
   }
      const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
