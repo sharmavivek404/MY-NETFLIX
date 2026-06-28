@@ -1,17 +1,61 @@
  import Header from "./Header";
  import { useState,useRef } from "react";
  import { checkValidData } from "../utils/Validate";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { icon_url } from "../utils/constants";
  const Login = ()=>{
   const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null); 
+    const dispatch=useDispatch();
     const name= useRef(null);
     const email= useRef(null);
     const password =useRef(null); 
   const handleButtonClick = () => {
-    const message = checkValidData(name.current.value,email.current.value, password.current.value);
+    const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     if(message) return;
     //sign in/ sign up 
+    if(!isSignInForm){
+      //sign up
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    updateProfile(user, {
+ displayName: name.current.value, photoURL: icon_url,
+}).then(() => {
+  const {uid,email,displayName,photoURL} = auth.currentUser;
+      dispatch(addUser({uid:uid,email:email,displayName:displayName , photoURL:photoURL}));
+  
+}).catch((error) => {
+  setErrorMessage(error.message);
+});
+    
+  
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode+ "-" + errorMessage);
+  });
+
+    }else{
+      //sign in
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode + "-" + errorMessage);
+  });
+    }
 
   }
      const toggleSignInForm = () => {
@@ -65,6 +109,11 @@
 
         </form>
       </div>
+      <div className="absolute bottom-0 left-0 w-full bg-opacity-60 py-4 ">
+  <p className="font-bold text-xl md:text-2xl text-red-500">
+    ⚠️ EDUCATIONAL PROJECT ONLY
+  </p>
+</div>
 
     </div>;
  };
