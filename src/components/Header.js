@@ -18,8 +18,8 @@ import { bg_Logo } from "../utils/constants";
       .catch((error) => {
       });
   };
-  const unsubscribe = useEffect(() => {
-  onAuthStateChanged(auth, (user) => {
+   useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
     if (user) {
       const {uid,email,displayName,photoURL} = user;
       dispatch(addUser({uid:uid,email:email,displayName:displayName , photoURL:photoURL}));
