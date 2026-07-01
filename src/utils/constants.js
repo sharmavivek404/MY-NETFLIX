@@ -7,8 +7,8 @@ export const API_OPTIONS = {
   headers: {
     "Content-Type": "application/json",
     "trakt-api-version": "2",
-    "trakt-api-key": "7a69c8dd4ea59e0d0891329add2b07445b24237e4de5903256c4b8f80ebbcb5c"
+    "trakt-api-key": process.env.REACT_APP_TRAKT_API_KEY
   }
 };
 
-export const YOUTUBE_API_KEY = "AIzaSyBsKSFaVxelhUMNAdi5Fb9t-Y_ML-j3pnI";
+export const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
