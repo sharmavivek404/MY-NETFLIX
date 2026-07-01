@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { API_OPTIONS } from "../../utils/constants";
+import { API_OPTIONS } from "../utils/constants";
 import { useEffect } from "react";
-import { addlatestreleased } from "../../utils/movieSlice";
+import { addlatestreleased } from "../utils/movieSlice";
 
 
 

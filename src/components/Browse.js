@@ -1,11 +1,16 @@
 
 import Header from "./Header";
-import useLatestMovies from "./Hooks/useLatestMovies";
+import useLatestMovies from "../hooks/useLatestMovies";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
+
 const Browse = () => {
   useLatestMovies();
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Header />
+      <MainContainer />
+      <SecondaryContainer />
     </div>
   );
 };
